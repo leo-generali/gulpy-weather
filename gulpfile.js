@@ -6,6 +6,7 @@ var htmlclean = require('gulp-htmlclean');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var sass = require('gulp-sass');
 
 var del = require('del');
 
@@ -26,21 +27,42 @@ var paths = {
 	distJS: 'dist/**/*.js'
 };
 
+///////////////
+//
+// SASS
+//
+//////////////
+
+gulp.task('sass', function() {
+	gulp.src('src/styles/**/*.scss')
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest(paths.tmp))
+})
+
+///////////////
+//
+// Default
+//
+//////////////
+
 gulp.task('default', ['watch'] );
 
 gulp.task('html', function() {
-	return gulp.src(paths.srcHTML).pipe(gulp.dest(paths.tmp));
+	return gulp.src(paths.srcHTML)
+		.pipe(gulp.dest(paths.tmp));
 });
 
-gulp.task('css', function() {
-	return gulp.src(paths.srcCSS).pipe(gulp.dest(paths.tmp));
-});
+// gulp.task('css', ['sass'], function() {
+// 	return gulp.src(paths.srcCSS)
+// 		.pipe(gulp.dest(paths.tmp));
+// });
 
 gulp.task('js', function() {
-	return gulp.src(paths.srcJS).pipe(gulp.dest(paths.tmp));
+	return gulp.src(paths.srcJS)
+		.pipe(gulp.dest(paths.tmp));
 });
 
-gulp.task('copy', ['html', 'css', 'js']);
+gulp.task('copy', ['html', 'sass', 'js']);
 
 gulp.task('inject', ['copy'], function() {
 	var css = gulp.src(paths.tmpCSS);
