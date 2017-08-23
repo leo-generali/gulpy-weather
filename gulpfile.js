@@ -2,18 +2,24 @@ var gulp = require('gulp');
 var inject = require('gulp-inject');
 
 var paths = {
+
+
+
+
+
+
 	src: 'src/**/*',
 	srcHTML: 'src/**/*.html',
 	srcCSS: 'src/**/*.css',
 	srcJS: 'src/**/*.js',
 
 	tmp: 'tmp',
-	tmpHTML: 'tmp/index.html',
+	tmpIndex: 'tmp/index.html',
 	tmpCSS: 'tmp/**/*.css',
 	tmpJS: 'tmp/**/*.js',
 
 	dist: 'dist',
-	distHTML: 'dist/index.html',
+	distIndex: 'dist/index.html',
 	distCSS: 'dist/**/*.css',
 	distJS: 'dist/**/*.js'
 };
@@ -35,3 +41,12 @@ gulp.task('js', function() {
 });
 
 gulp.task('copy', ['html', 'css', 'js']);
+
+gulp.task('inject', ['copy'], function() {
+	var css = gulp.src(paths.tmpCSS);
+	var js = gulp.src(paths.tmpJS);
+	return gulp.src(paths.tmpIndex)
+		.pipe(inject(css, {relative: true} ))
+		.pipe(inject(js, {relative: true} ))
+		.pipe(gulp.dest(paths.tmp));
+});

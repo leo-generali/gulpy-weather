@@ -7,7 +7,8 @@
     "gulp": "^3.9.1"
   },
   "devDependencies": {
-    "gulp-inject": "^4.2.0"
+    "gulp-inject": "^4.2.0",
+    "gulp-webserver": "^0.9.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
