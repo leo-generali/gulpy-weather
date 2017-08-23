@@ -1,17 +1,22 @@
+//Overall
 var gulp = require('gulp');
 var inject = require('gulp-inject');
 var webserver = require('gulp-webserver');
+var del = require('del');
 
+//HTML
 var htmlclean = require('gulp-htmlclean');
-var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
+//Styling
+var cleanCSS = require('gulp-clean-css');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 
-var del = require('del');
+//Logic
+var babel = require('gulp-babel');
 
 var paths = {
 	src: 'src/**/*',
@@ -58,13 +63,11 @@ gulp.task('html', function() {
 		.pipe(gulp.dest(paths.tmp));
 });
 
-// gulp.task('css', ['sass'], function() {
-// 	return gulp.src(paths.srcCSS)
-// 		.pipe(gulp.dest(paths.tmp));
-// });
-
 gulp.task('js', function() {
 	return gulp.src(paths.srcJS)
+		.pipe(babel({
+			presets: ['env']
+		}))
 		.pipe(gulp.dest(paths.tmp));
 });
 
