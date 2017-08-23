@@ -6,7 +6,10 @@ var htmlclean = require('gulp-htmlclean');
 var cleanCSS = require('gulp-clean-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+
 var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var autoprefixer = require('gulp-autoprefixer');
 
 var del = require('del');
 
@@ -35,7 +38,10 @@ var paths = {
 
 gulp.task('sass', function() {
 	gulp.src('src/styles/**/*.scss')
-		.pipe(sass().on('error', sass.logError))
+	    .pipe(sourcemaps.init())
+	    .pipe(sass().on('error', sass.logError))
+	    .pipe(sourcemaps.write())
+	    .pipe(autoprefixer())
 		.pipe(gulp.dest(paths.tmp))
 })
 
