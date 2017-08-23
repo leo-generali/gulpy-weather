@@ -102,20 +102,20 @@ gulp.task('watch', ['serve'], function(){
 //////////////
 
 gulp.task('html:dist', function() {
-	return gulp.src(paths.srcHTML)
+	return gulp.src(paths.tmpIndex)
 		.pipe(htmlclean())
 		.pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('css:dist', function() {
-	return gulp.src(paths.srcCSS)
+	return gulp.src(paths.tmpCSS)
 		.pipe(concat('style.min.css'))
 		.pipe(cleanCSS())
 		.pipe(gulp.dest(paths.dist));
 });
 
 gulp.task('js:dist', function() {
-	return gulp.src(paths.srcJS)
+	return gulp.src(paths.tmpJS)
 		.pipe(concat('script.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest(paths.dist));
